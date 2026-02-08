@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For You ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#ffd6e8, #fff);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 20px;
+      background: hotpink;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #noBtn {
+      position: absolute;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      top: -10px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="box" id="page1">
+  <h2>Will you be my Valentine? 💖</h2>
+  <button onclick="yesClicked()">Yes 💘</button>
+  <button id="noBtn">No 💔</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="box hidden" id="page2">
+  <img src="photo1.jpg">
+  <h3>Where did we first meet? 😏</h3>
+  <button onclick="wrong()">At a café</button>
+  <button onclick="showPage(3)">That random place 😉</button>
+  <button onclick="wrong()">Instagram 😂</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="box hidden" id="page3">
+  <img src="photo2.jpg">
+  <h3>What’s my most annoying habit? 😌</h3>
+  <button onclick="wrong()">Being perfect</button>
+  <button onclick="showPage(4)">Overthinking 😭</button>
+</div>
+
+<!-- FINAL PAGE -->
+<div class="box hidden" id="page4">
+  <img src="photo3.jpg">
+  <h2>I love you ❤️</h2>
+  <p>Happy Valentine’s Day 💌</p>
+</div>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  });
+
+  function showPage(num) {
+    document.querySelectorAll(".box").forEach(p => p.classList.add("hidden"));
+    document.getElementById("page" + num).classList.remove("hidden");
+  }
+
+  function wrong() {
+    alert("Wrong answer 😝 Try again");
+  }
+
+  function yesClicked() {
+    showPage(2);
+    document.getElementById("bgMusic").play();
+    launchConfetti();
+  }
+
+  function launchConfetti() {
+    for (let i = 0; i < 80; i++) {
+      const c = document.createElement("div");
+      c.className = "confetti";
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.backgroundColor =
+        ["#ff4d88", "#ffd700", "#7bed9f", "#70a1ff"][Math.floor(Math.random() * 4)];
+      c.style.animationDuration = Math.random() * 2 + 2 + "s";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }
+  }
+</script>
+
+</body>
+</html>
